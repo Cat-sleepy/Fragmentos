@@ -1,0 +1,292 @@
+
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .wrap { padding: 1rem 0; font-family: var(--font-sans); }
+  .progress-bar-bg { height: 6px; background: var(--color-border-tertiary); border-radius: 3px; margin-bottom: 1.5rem; }
+  .progress-bar-fill { height: 6px; background: var(--color-text-success); border-radius: 3px; transition: width 0.3s; }
+  .progress-label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .session-block { margin-bottom: 1.5rem; }
+  .session-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .session-tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .tag-s1 { background: var(--color-background-info); color: var(--color-text-info); }
+  .tag-s2 { background: var(--color-background-warning); color: var(--color-text-warning); }
+  .tag-s3 { background: #EEEDFE; color: #3C3489; }
+  .tag-s4 { background: var(--color-background-success); color: var(--color-text-success); }
+  .session-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .session-count { margin-left: auto; font-size: 12px; color: var(--color-text-tertiary); }
+  .item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border-radius: var(--border-radius-md); cursor: pointer; transition: background 0.15s; user-select: none; }
+  .item:hover { background: var(--color-background-secondary); }
+  .item.done .item-text { color: var(--color-text-tertiary); text-decoration: line-through; }
+  .checkbox { width: 18px; height: 18px; border-radius: 4px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: background 0.15s, border-color 0.15s; }
+  .checkbox.checked { background: var(--color-text-success); border-color: var(--color-text-success); }
+  .checkmark { width: 10px; height: 10px; display: none; }
+  .checkmark path { stroke: white; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .checkbox.checked .checkmark { display: block; }
+  .item-text { font-size: 14px; color: var(--color-text-primary); line-height: 1.5; }
+  .item-sub { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+  .tp1-banner { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--border-radius-md); background: var(--color-background-success); border: 0.5px solid var(--color-border-success); margin-top: 10px; }
+  .tp1-banner-text { font-size: 13px; color: var(--color-text-success); }
+  .reset-btn { font-size: 13px; color: var(--color-text-tertiary); background: none; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 5px 12px; cursor: pointer; margin-top: 0.5rem; }
+  .reset-btn:hover { background: var(--color-background-secondary); }
+</style>
+
+<div class="wrap">
+  <div class="progress-label">
+    <span>Progresso — Fase 1: Backend</span>
+    <span id="pct">0%</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="bar" style="width:0%"></div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-header">
+      <span class="session-tag tag-s1">Sessão 1</span>
+      <span class="session-title">Setup & estrutura</span>
+      <span class="session-count" id="count-s1"></span>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar repositório GitHub público com nome do projeto</div><div class="item-sub">Estrutura: /backend e /frontend na raiz</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Proteger branch main no GitHub</div><div class="item-sub">Settings → Branches → Add rule → Require PR before merging</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar projeto no Supabase</div><div class="item-sub">Guardar SUPABASE_URL e SUPABASE_ANON_KEY e SERVICE_ROLE_KEY</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar tabela fragments no Supabase</div><div class="item-sub">Campos: id, user_id, text, media_url, media_type, category, created_at</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar bucket de storage no Supabase</div><div class="item-sub">Nome: fragments-media · Marcar como público</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Inicializar projeto Node.js em /backend</div><div class="item-sub">npm init -y · Instalar express, dotenv, cors, helmet, @supabase/supabase-js</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar ficheiro .env e .env.example</div><div class="item-sub">Adicionar .env ao .gitignore imediatamente</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar estrutura de pastas do backend</div><div class="item-sub">/src/routes · /src/middleware · /src/controllers · /src/lib</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Servidor Express a correr localmente</div><div class="item-sub">GET /health responde 200 · Testar no browser ou Postman</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s1">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Primeiro commit convencional</div><div class="item-sub">Ex: feat: initial backend setup with express and supabase client</div></div>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-header">
+      <span class="session-tag tag-s2">Sessão 2</span>
+      <span class="session-title">Autenticação JWT</span>
+      <span class="session-count" id="count-s2"></span>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Ativar Supabase Auth no dashboard</div><div class="item-sub">Authentication → Settings → desativar "Confirm email" para desenvolvimento</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar supabase client em /src/lib/supabase.js</div><div class="item-sub">Usar SERVICE_ROLE_KEY para o cliente do servidor (admin access)</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">POST /auth/register — criar utilizador</div><div class="item-sub">supabase.auth.signUp({ email, password }) · Retornar user e session</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">POST /auth/login — fazer login</div><div class="item-sub">supabase.auth.signInWithPassword() · Retornar access_token</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Criar middleware de autenticação</div><div class="item-sub">Lê Bearer token do header · Valida com supabase.auth.getUser(token)</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Testar registo e login no Postman</div><div class="item-sub">Guardar o access_token como variável de ambiente no Postman</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Testar que rotas protegidas recusam pedidos sem token</div><div class="item-sub">Deve retornar 401 Unauthorized</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s2">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Commit das alterações</div><div class="item-sub">Ex: feat: add jwt auth middleware and auth routes</div></div>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-header">
+      <span class="session-tag tag-s3">Sessão 3</span>
+      <span class="session-title">CRUD + file upload</span>
+      <span class="session-count" id="count-s3"></span>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Instalar multer e base64-arraybuffer</div><div class="item-sub">npm install multer base64-arraybuffer</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">POST /fragments — criar fragmento com upload</div><div class="item-sub">Multer memoryStorage → base64 → Supabase Storage → guardar URL na DB</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">GET /fragments — listar fragmentos aleatórios</div><div class="item-sub">Usar ORDER BY RANDOM() no Supabase · Limitar a 20 resultados</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">GET /fragments/mine — fragmentos do utilizador autenticado</div><div class="item-sub">Filtrar por user_id do token · Rota protegida</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">GET /fragments/:id — detalhe de um fragmento</div><div class="item-sub">Retornar 404 se não existir</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">PUT /fragments/:id — editar fragmento</div><div class="item-sub">Verificar que user_id do token == user_id do fragmento · 403 se não for dono</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">DELETE /fragments/:id — eliminar fragmento</div><div class="item-sub">Eliminar também o ficheiro do Supabase Storage</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">GET /stats — estatísticas gerais</div><div class="item-sub">Total de fragmentos · Total de contribuidores · Categoria mais usada</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Validar tipos de ficheiro aceites</div><div class="item-sub">Só image/*, video/*, audio/* · Rejeitar outros com 400</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Testar todos os endpoints no Postman</div><div class="item-sub">Testar com e sem token · Testar com ficheiros de imagem, vídeo e áudio</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s3">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Commit das alterações</div><div class="item-sub">Ex: feat: add full CRUD for fragments with file upload to storage</div></div>
+    </div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-header">
+      <span class="session-tag tag-s4">Sessão 4</span>
+      <span class="session-title">Testes + deploy + TP1</span>
+      <span class="session-count" id="count-s4"></span>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Instalar Jest e configurar npm test</div><div class="item-sub">npm install -D jest · Adicionar "test": "jest" ao package.json</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Escrever teste 1 — GET /health retorna 200</div><div class="item-sub">Usar supertest para testar endpoints HTTP</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Escrever teste 2 — POST /auth/login sem body retorna 400</div><div class="item-sub">Testar validação de inputs</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Escrever teste 3 — GET /fragments sem token retorna 401</div><div class="item-sub">Testar que o middleware de auth funciona</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Confirmar que npm test passa com 3+ testes verdes</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Fazer deploy do backend no Render.com</div><div class="item-sub">Configurar variáveis de ambiente no Render · Confirmar URL pública a funcionar</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Escrever README do backend</div><div class="item-sub">Tabela de endpoints · Como correr localmente · Variáveis de ambiente (.env.example)</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Tirar screenshots do Postman de cada endpoint</div><div class="item-sub">Pelo menos: register, login, POST fragment, GET fragments, DELETE fragment</div></div>
+    </div>
+    <div class="item" onclick="toggle(this)" data-s="s4">
+      <div class="checkbox"><svg class="checkmark" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>
+      <div><div class="item-text">Submeter TP1 no Moodle</div><div class="item-sub">Link do repositório + README + screenshots Postman</div></div>
+    </div>
+
+    <div class="tp1-banner">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM7 11V7h2v4H7zm0-5.5V4h2v1.5H7z" fill="currentColor" style="color:var(--color-text-success)"/></svg>
+      <span class="tp1-banner-text">TP1 entregue na sessão 4 — vale 20% da nota final</span>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">Limpar progresso</button>
+</div>
+
+<script>
+const STORAGE_KEY = 'ruido_backend_checklist';
+
+function save() {
+  const checked = [];
+  document.querySelectorAll('.item').forEach((item, i) => {
+    if (item.classList.contains('done')) checked.push(i);
+  });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(checked)); } catch(e) {}
+}
+
+function load() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const items = document.querySelectorAll('.item');
+    data.forEach(i => {
+      if (items[i]) {
+        items[i].classList.add('done');
+        items[i].querySelector('.checkbox').classList.add('checked');
+      }
+    });
+  } catch(e) {}
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.item').length;
+  const done = document.querySelectorAll('.item.done').length;
+  const pct = all ? Math.round((done / all) * 100) : 0;
+  document.getElementById('bar').style.width = pct + '%';
+  document.getElementById('pct').textContent = pct + '%';
+
+  ['s1','s2','s3','s4'].forEach(s => {
+    const total = document.querySelectorAll(`.item[data-s="${s}"]`).length;
+    const done = document.querySelectorAll(`.item.done[data-s="${s}"]`).length;
+    const el = document.getElementById('count-' + s);
+    if (el) el.textContent = done + '/' + total;
+  });
+}
+
+function toggle(el) {
+  el.classList.toggle('done');
+  el.querySelector('.checkbox').classList.toggle('checked');
+  save();
+  updateProgress();
+}
+
+function resetAll() {
+  document.querySelectorAll('.item').forEach(item => {
+    item.classList.remove('done');
+    item.querySelector('.checkbox').classList.remove('checked');
+  });
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  updateProgress();
+}
+
+load();
+updateProgress();
+</script>
