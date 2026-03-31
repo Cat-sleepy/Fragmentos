@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { supabase } from '../lib/supabase.js';
+import { error } from 'node:console';
+import { json } from 'node:stream/consumers';
 
 export const getFragments = async (req: Request, res: Response) => {
     const { data, error } = await supabase
@@ -67,6 +69,60 @@ export const getFragmentById = async (req: Request, res: Response) => {
     })
 
 };
+
+export const updateFragment = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'Não autenticado' });
+    }
+
+    // 1. buscar o fragmento pelo id
+    const { data: fragment, error } = await supabase
+        .from('fragments')
+        .select()
+        .eq('id', req.params.id) // id do fragmento (vem na URL /fragments/123)
+        .single()
+
+    if (error) {
+    console.log(error);
+    return res.status(500).json({
+        message: 'Erro ao gerar Doença Neural',
+    });
+    }
+
+    if(!fragment) {
+        return res.status(404).json({
+            message: 'O fragmento não exite'
+        })
+    }
+    if(fragment.user_id !== req.user.id) {
+        return res.status(403).json({
+            message: 'Não és o dono deste fragmento!',
+        });
+    }
+
+    const { data: updated, error: updateError } = await supabase
+        .from('fragments')
+        .update(req.body)
+        .eq('id', req.params.id)
+        .select()
+        .single()
+
+    if (updateError) {
+    console.log(updateError);
+    return res.status(500).json({
+        message: 'Erro ao atualizar fragmento',
+    });
+}
+
+return res.status(200).json({
+    data: updated,
+});
+
+};
+
+
+
+
 
 
 
