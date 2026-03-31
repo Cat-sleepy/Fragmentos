@@ -40,5 +40,33 @@ export const getMyFragments = async (req: Request, res: Response) => {
     });
 };
 
+export const getFragmentById = async (req: Request, res: Response) => {
+    const { data, error } = await supabase
+        .from('fragments')
+        .select()
+        .eq('id', req.params.id)
+        .single()  // ← importante!
+    
+    // aqui tratas o erro
+    if (error) {
+    if (error.code === 'PGRST116') {
+        return res.status(404).json({
+            message: 'Este ficheiro não existe'
+        })
+    }
+    console.log(error);
+    return res.status(500).json({
+        message: 'Erro ao gerar imagem',
+    })
+}
+
+
+     // aqui devolves o sucesso
+    return res.status(200).json({
+        data,
+    })
+
+};
+
 
 
