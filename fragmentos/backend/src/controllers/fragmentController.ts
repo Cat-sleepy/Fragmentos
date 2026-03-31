@@ -18,4 +18,27 @@ export const getFragments = async (req: Request, res: Response) => {
 };
 
 
+export const getMyFragments = async (req: Request, res: Response) => {
+    if (!req.user) {
+    return res.status(401).json({ message: 'Não autenticado' });
+}
+
+    const { data, error } = await supabase
+        .from('fragments')
+        .select()
+        .eq('user_id', req.user.id)
+    
+    if (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: 'Erro ao gerar imagem',
+        });
+    }
+
+    return res.status(200).json({
+        data,
+    });
+};
+
+
 
