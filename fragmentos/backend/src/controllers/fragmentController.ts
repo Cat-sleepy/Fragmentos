@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { supabase } from '../lib/supabase.js';
-import { error } from 'node:console';
-import { json } from 'node:stream/consumers';
+
 
 export const getFragments = async (req: Request, res: Response) => {
     const { data, error } = await supabase
@@ -83,11 +82,16 @@ export const updateFragment = async (req: Request, res: Response) => {
         .single()
 
     if (error) {
+    if (error.code === 'PGRST116') {
+        return res.status(404).json({
+            message: 'O fragmento não existe'
+        })
+    }
     console.log(error);
     return res.status(500).json({
         message: 'Erro ao gerar Doença Neural',
     });
-    }
+}
 
     if(!fragment) {
         return res.status(404).json({
