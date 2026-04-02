@@ -7,24 +7,33 @@ export const uploadFile = async (req: Request, res: Response) => {
     const file = req.file;
 
     if (!file) {
-      res.status(400).json({ message: 'Please upload a file' });
+    res.status(400).json({ message: 'Please upload a file' });
+    return;
+    }
+
+    // validar tipo de ficheiro
+    const allowedTypes = ['image/', 'video/', 'audio/', 'text/'];
+    const isAllowed = allowedTypes.some(type => file.mimetype.startsWith(type));
+
+    if (!isAllowed) {
+      res.status(400).json({ message: 'Tipo de ficheiro não permitido. Apenas imagem, vídeo, áudio ou texto.' });
       return;
     }
 
     const fileBase64 = decode(file.buffer.toString('base64'));
 
     const { data, error } = await supabase.storage
-      .from('images')
+      .from('fragments-media') 
       .upload(file.originalname, fileBase64, {
-        contentType: 'image/png',
-      });
+          contentType: file.mimetype,
+    });
 
     if (error) {
       throw error;
     }
 
     const { data: image } = supabase.storage
-      .from('images')
+      .from('fragments-media')  // ← era 'images'
       .getPublicUrl(data.path);
 
     const { error: dbError } = await supabase
