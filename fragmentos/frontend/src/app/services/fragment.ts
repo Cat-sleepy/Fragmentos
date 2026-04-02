@@ -44,4 +44,28 @@ export class Fragment {
       })
     );
   }
+
+  getMyFragments() {
+    return from(supabase.auth.getSession()).pipe(
+      switchMap(({ data }) => {
+        const token = data.session?.access_token;
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`
+        });
+        return this.http.get<FragmentsResponse>(`${this.apiUrl}/fragments/mine`, { headers });
+      })
+    );
+  }
+
+  deleteFragment(id: number) {
+    return from(supabase.auth.getSession()).pipe(
+      switchMap(({ data }) => {
+        const token = data.session?.access_token;
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`
+        });
+        return this.http.delete<void>(`${this.apiUrl}/fragments/${id}`, { headers });
+      })
+    );
+  }
 }
