@@ -15,10 +15,13 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.100.1",
+    "@types/multer": "^2.1.0",
+    "base64-arraybuffer": "^1.0.2",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "multer": "^2.1.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
@@ -36,7 +39,9 @@
   },
   "jest": {
     "preset": "ts-jest/presets/default-esm",
-    "extensionsToTreatAsEsm": [".ts"],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^(\\.{1,2}/.*)\\.js$": "$1"
