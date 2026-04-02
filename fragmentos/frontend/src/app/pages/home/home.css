@@ -1,0 +1,32 @@
+.colagem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.fragmento {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.fragmento img,
+.fragmento video {
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.fragmento audio {
+  width: 300px;
+}
+
+.texto {
+  max-width: 300px;
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
