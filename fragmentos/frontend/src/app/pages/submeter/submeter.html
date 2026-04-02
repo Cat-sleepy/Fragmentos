@@ -1,1 +1,58 @@
-<p>submeter works!</p>
+<div class="submeter-container">
+  <h1>Submeter Fragmento</h1>
+  <p>Partilha aquilo que te pesa. Uma imagem, um vídeo, um áudio, um texto.</p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+    <div class="campo">
+      <label for="ficheiro">Ficheiro *</label>
+      <input 
+        id="ficheiro"
+        type="file" 
+        accept="image/*,video/*,audio/*,text/*"
+        (change)="onFileChange($event)"
+      />
+      @if (!selectedFile && form.touched) {
+        <span class="erro-msg">Seleciona um ficheiro.</span>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="texto">Texto (opcional)</label>
+      <textarea 
+        id="texto"
+        formControlName="texto" 
+        rows="4"
+        placeholder="Escreve algo se quiseres..."
+      ></textarea>
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Categoria *</label>
+      <select id="categoria" formControlName="categoria">
+        <option value="">Escolhe uma categoria</option>
+        <option value="cansaço">Cansaço</option>
+        <option value="ansiedade">Ansiedade</option>
+        <option value="tristeza">Tristeza</option>
+        <option value="solidão">Solidão</option>
+        <option value="outro">Outro</option>
+      </select>
+      @if (form.get('categoria')?.invalid && form.get('categoria')?.touched) {
+        <span class="erro-msg">Categoria obrigatória.</span>
+      }
+    </div>
+
+    @if (erro) {
+      <p class="erro-msg">{{ erro }}</p>
+    }
+
+    @if (sucesso) {
+      <p class="sucesso-msg">Fragmento submetido com sucesso!</p>
+    }
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'A submeter...' : 'Submeter' }}
+    </button>
+
+  </form>
+</div>
