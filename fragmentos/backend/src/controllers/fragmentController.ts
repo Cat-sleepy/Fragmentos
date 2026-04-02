@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { supabase } from '../lib/supabase.js';
+import { count } from 'node:console';
 
 
 export const getFragments = async (req: Request, res: Response) => {
@@ -141,7 +142,7 @@ export const deleteFragment = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'O fragmento não existe' })
         }
         console.log(error);
-        return res.status(500).json({ message: 'Erro ao buscar fragmento' });
+        return res.status(500).json({ message: 'Erro ao procurar fragmento' });
     }
 
     if (!fragment) {
@@ -176,6 +177,44 @@ export const deleteFragment = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({ message: 'Fragmento eliminado com sucesso' });
+};
+
+export const getStats = async (req: Request, res: Response) => {
+    
+    // 1. total de fragmentos
+    const { count: totalFragments, error: error1 } = await supabase
+        .from('fragments')
+        .select('*', { count: 'exact', head: true })
+
+    if (error1) {
+        return res.status(500).json({ message: 'Erro na procura do total de fragmentos' })
+    }
+
+    // 2. total de contribuidores
+    const { count: totalContributors, error: error2 } = await supabase
+        .from('fragments')
+        .select('user_id', { count: 'exact', head: true })
+
+    if (error2) { 
+        return res.status(500).json({ message: 'Erro na procura do total de contribuidores'})
+    }
+
+    // 3. categoria mais usada
+    const { data: topCategory, error: error3 } = await supabase
+    .rpc('get_top_category')
+
+    if (error3) {
+        console.log(error3);
+        return res.status(500).json({ message: 'Erro na procura do top de categorias' })
+    }
+
+    
+
+    return res.status(200).json({
+        totalFragments,
+        totalContributors,
+        topCategory,
+    })
 };
 
 
