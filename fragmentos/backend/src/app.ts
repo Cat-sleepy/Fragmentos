@@ -6,20 +6,20 @@ import cors from 'cors';
 import helmet from 'helmet';
 import multer from 'multer';
 import authRouter from './routes/auth.js';
-import uploadRouter from './routes/upload.js'
-import fragmentsRouter from './routes/fragments.js' // importas o router (não o controller!)
+import uploadRouter from './routes/upload.js';
+import fragmentsRouter from './routes/fragments.js';
 
 // initialize express app
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(helmet());
-app.use(cors()); // enable `CORS` for all routes
-app.use(express.json()); // enable parsing of json request body
-app.use(express.urlencoded({ extended: true}));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRouter);
 app.use('/api/images', uploadRouter);
-app.use('/fragments', fragmentsRouter); // e registas a rota
+app.use('/fragments', fragmentsRouter);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
@@ -29,27 +29,29 @@ app.get('/health', (req, res) => {
 const storage = multer.memoryStorage();
 
 // Initialize multer with the storage configuration
-const upload = multer({ storage: storage});
+const upload = multer({ storage: storage });
 
-//route handler
-app.post('/api/images', upload.single('file'), async (req, res) =>{
-  try{
+// route handler
+app.post('/api/images', upload.single('file'), async (req, res) => {
+  try {
     const file = req.file;
 
     if (!file) {
-      res.status(400).json({ message: 'Please upload a file'});
+      res.status(400).json({ message: 'Please upload a file' });
       return;
     }
     console.log(file);
 
   } catch (error) {
-    res.status(500).json({ error: error});
+    res.status(500).json({ error: error });
   }
-
 });
 
+export default app;
 
-app.listen(PORT, () => {
-  console.log(`Servidor a correr na porta ${PORT}`);
-});
-
+// só arranca o servidor se não estiver em modo de teste
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Servidor a correr na porta ${PORT}`);
+  });
+}
