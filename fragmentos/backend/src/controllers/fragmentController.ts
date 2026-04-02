@@ -124,6 +124,60 @@ return res.status(200).json({
 
 };
 
+export const deleteFragment = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'Não autenticado' });
+    }
+
+    // 1. buscar o fragmento
+    const { data: fragment, error } = await supabase
+        .from('fragments')
+        .select()
+        .eq('id', req.params.id)
+        .single()
+
+    if (error) {
+        if (error.code === 'PGRST116') {
+            return res.status(404).json({ message: 'O fragmento não existe' })
+        }
+        console.log(error);
+        return res.status(500).json({ message: 'Erro ao buscar fragmento' });
+    }
+
+    if (!fragment) {
+        return res.status(404).json({ message: 'O fragmento não existe' })
+    }
+
+    // 2. verificar se é o dono
+    if (fragment.user_id !== req.user.id) {
+        return res.status(403).json({ message: 'Não és o dono deste fragmento!' });
+    }
+
+    // 3. apagar do Storage
+    const { error: storageError } = await supabase
+        .storage
+        .from('fragments')
+        .remove([fragment.file_path])
+
+    if (storageError) {
+        console.log(storageError);
+        return res.status(500).json({ message: 'Erro ao apagar ficheiro do storage' });
+    }
+
+    // 4. apagar da DB
+    const { error: deleteError } = await supabase
+        .from('fragments')
+        .delete()
+        .eq('id', req.params.id)
+
+    if (deleteError) {
+        console.log(deleteError);
+        return res.status(500).json({ message: 'Erro ao eliminar fragmento' });
+    }
+
+    return res.status(200).json({ message: 'Fragmento eliminado com sucesso' });
+};
+
 
 
 
