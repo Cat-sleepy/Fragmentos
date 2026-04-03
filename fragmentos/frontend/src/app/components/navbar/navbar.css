@@ -49,3 +49,24 @@ nav div button:hover {
   background: var(--cor-destaque);
   color: var(--cor-fundo);
 }
+
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  nav div {
+    gap: 1rem;
+  }
+
+  nav div a {
+    font-size: 0.8rem;
+  }
+
+  nav div button {
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}

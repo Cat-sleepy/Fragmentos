@@ -30,3 +30,25 @@
   font-size: 1rem;
   line-height: 1.6;
 }
+
+
+@media (max-width: 768px) {
+  .colagem {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .fragmento img,
+  .fragmento video {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .fragmento audio {
+    width: 100%;
+  }
+
+  .texto {
+    max-width: 100%;
+  }
+}
