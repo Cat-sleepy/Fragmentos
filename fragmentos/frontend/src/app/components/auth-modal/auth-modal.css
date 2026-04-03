@@ -76,3 +76,12 @@ button[type="submit"] {
   font-size: 0.85rem;
   text-decoration: underline;
 }
+
+
+
+@media (max-width: 768px) {
+  .modal {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}

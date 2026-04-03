@@ -5,13 +5,14 @@
 }
 
 h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 p {
   color: var(--cor-texto-suave);
   margin-bottom: 2rem;
+  font-size: 0.95rem;
 }
 
 form {
@@ -52,4 +53,19 @@ button[type="submit"]:hover {
 button[type="submit"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .submeter-container {
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  textarea {
+  max-height: 100px;
+  resize: none;
+}
 }
