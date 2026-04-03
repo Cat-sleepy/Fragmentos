@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { supabase } from '../lib/supabase';
 import { from, switchMap } from 'rxjs';
 
-interface FragmentData {
+export interface FragmentData {
   id: number;
   text: string | null;
   media_url: string;
