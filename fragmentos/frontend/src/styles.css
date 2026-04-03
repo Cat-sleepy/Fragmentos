@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --cor-fundo: #0a0a0a;
+  --cor-texto: #e8e4dc;
+  --cor-texto-suave: #8a8278;
+  --cor-destaque: #c8b89a;
+  --cor-erro: #c0392b;
+  --cor-sucesso: #27ae60;
+  --fonte-principal: 'Georgia', serif;
+  --fonte-mono: 'Courier New', monospace;
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-principal);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--cor-destaque);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--fonte-principal);
+}
+
+input, textarea, select {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: var(--cor-texto);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--fonte-principal);
+  font-size: 1rem;
+  border-radius: 2px;
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+}
+
+.erro-msg {
+  color: var(--cor-erro);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.sucesso-msg {
+  color: var(--cor-sucesso);
+  font-size: 0.9rem;
+}

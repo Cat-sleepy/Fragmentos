@@ -4,6 +4,19 @@
   <div>
     <a routerLink="/sobre">Sobre</a>
     <a routerLink="/submeter">Submeter</a>
-    <a routerLink="/perfil">Perfil</a>
+    
+    @if (utilizadorAutenticado) {
+      <a routerLink="/perfil">Perfil</a>
+      <button (click)="logout()">Sair</button>
+    } @else {
+      <button (click)="mostrarModal = true">Entrar</button>
+    }
   </div>
 </nav>
+
+@if (mostrarModal) {
+  <app-auth-modal 
+    (fechar)="mostrarModal = false"
+    (autenticado)="utilizadorAutenticado = true"
+  />
+}

@@ -1,0 +1,44 @@
+<div class="modal-overlay" (click)="fechar.emit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    
+    <button class="btn-fechar" (click)="fechar.emit()">✕</button>
+
+    <h2>{{ modo === 'login' ? 'Entrar' : 'Criar conta' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      
+      <div class="campo">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="o@teu.email" />
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+          <span class="erro-msg">Email inválido.</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label>Password</label>
+        <input type="password" formControlName="password" placeholder="mínimo 6 caracteres" />
+        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+          <span class="erro-msg">Password com mínimo 6 caracteres.</span>
+        }
+      </div>
+
+      @if (erro) {
+        <p class="erro-msg">{{ erro }}</p>
+      }
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'A processar...' : (modo === 'login' ? 'Entrar' : 'Criar conta') }}
+      </button>
+
+    </form>
+
+    <p class="trocar">
+      {{ modo === 'login' ? 'Ainda não tens conta?' : 'Já tens conta?' }}
+      <button (click)="trocarModo()">
+        {{ modo === 'login' ? 'Regista-te' : 'Entra' }}
+      </button>
+    </p>
+
+  </div>
+</div>
