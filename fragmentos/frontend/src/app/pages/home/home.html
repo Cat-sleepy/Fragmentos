@@ -1,7 +1,7 @@
 <div class="colagem">
   @if (loading) {
-    <p>A carregar fragmentos...</p>
-  }
+  <p>{{ mensagemLoading }}</p>
+}
 
   @for (fragment of fragments; track fragment.id) {
     <div class="fragmento">
