@@ -1,0 +1,72 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #1f1f1f;
+  position: sticky;
+  top: 0;
+  background-color: #0a0a0a;
+  z-index: 100;
+}
+
+nav a:first-child {
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  color: var(--cor-texto);
+}
+
+nav div {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+nav div a {
+  font-size: 0.9rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
+
+nav div a:hover {
+  color: var(--cor-texto);
+}
+
+nav div button {
+  background: none;
+  border: 1px solid var(--cor-destaque);
+  color: var(--cor-destaque);
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+nav div button:hover {
+  background: var(--cor-destaque);
+  color: var(--cor-fundo);
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  nav div {
+    gap: 1rem;
+  }
+
+  nav div a {
+    font-size: 0.8rem;
+  }
+
+  nav div button {
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}

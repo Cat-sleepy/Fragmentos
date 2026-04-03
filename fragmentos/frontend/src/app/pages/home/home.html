@@ -1,0 +1,27 @@
+<div class="colagem">
+  @if (loading) {
+  <p>{{ mensagemLoading }}</p>
+}
+
+  @for (fragment of fragments; track fragment.id) {
+    <div class="fragmento">
+
+      @if (fragment.media_type?.startsWith('image/')) {
+        <img [src]="fragment.media_url" [alt]="fragment.text || 'fragmento'" />
+      }
+
+      @if (fragment.media_type?.startsWith('video/')) {
+        <video [src]="fragment.media_url" controls></video>
+      }
+
+      @if (fragment.media_type?.startsWith('audio/')) {
+        <audio [src]="fragment.media_url" controls></audio>
+      }
+
+      @if (fragment.media_type?.startsWith('text/')) {
+        <p class="texto">{{ fragment.text }}</p>
+      }
+
+    </div>
+  }
+</div>

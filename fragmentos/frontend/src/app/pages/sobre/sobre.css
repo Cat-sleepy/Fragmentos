@@ -1,0 +1,39 @@
+.sobre-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+h1 {
+  font-size: 1rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  margin-bottom: 3rem;
+}
+
+.texto p {
+  margin-bottom: 1.8rem;
+  font-size: 1.1rem;
+  color: var(--cor-texto);
+  line-height: 1.9;
+}
+
+.fecho {
+  margin-top: 3rem;
+  font-style: italic;
+  color: var(--cor-destaque) !important;
+  border-left: 1px solid var(--cor-destaque);
+  padding-left: 1.5rem;
+}
+
+
+@media (max-width: 768px) {
+  .sobre-container {
+    padding: 2rem 1rem;
+  }
+
+  .texto p {
+    font-size: 1rem;
+  }
+}

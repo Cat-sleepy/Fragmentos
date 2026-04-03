@@ -1,0 +1,47 @@
+<div class="perfil-container">
+  <h1>Os meus Fragmentos</h1>
+
+  @if (loading) {
+    <p>A carregar...</p>
+  }
+
+  @if (erro) {
+    <p class="erro-msg">{{ erro }}</p>
+  }
+
+  @if (!loading && fragments.length === 0) {
+    <p>Ainda não submeteste nenhum fragmento.</p>
+  }
+
+  <div class="lista-fragmentos">
+    @for (fragment of fragments; track fragment.id) {
+      <div class="fragmento-card">
+
+        @if (fragment.media_type?.startsWith('image/')) {
+          <img [src]="fragment.media_url" alt="fragmento" />
+        }
+
+        @if (fragment.media_type?.startsWith('video/')) {
+          <video [src]="fragment.media_url" controls></video>
+        }
+
+        @if (fragment.media_type?.startsWith('audio/')) {
+          <audio [src]="fragment.media_url" controls></audio>
+        }
+
+        @if (fragment.text) {
+          <p>{{ fragment.text }}</p>
+        }
+
+        @if (fragment.category) {
+          <span class="categoria">{{ fragment.category }}</span>
+        }
+
+        <button (click)="eliminar(fragment.id)" class="btn-eliminar">
+          Eliminar
+        </button>
+
+      </div>
+    }
+  </div>
+</div>
