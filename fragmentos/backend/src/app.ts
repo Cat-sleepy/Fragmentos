@@ -20,6 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRouter);
 app.use('/api/images', uploadRouter);
 app.use('/fragments', fragmentsRouter);
+app.use(cors({
+  origin: ['https://fragmentos-frontend-bj6buo5zb-cat-sleepys-projects.vercel.app', 'http://localhost:4200']
+}));
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
