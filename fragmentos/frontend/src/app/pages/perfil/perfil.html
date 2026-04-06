@@ -29,17 +29,35 @@
           <audio [src]="fragment.media_url" controls></audio>
         }
 
-        @if (fragment.text) {
-          <p>{{ fragment.text }}</p>
+        @if (editandoId === fragment.id) {
+          <div class="form-editar">
+            <textarea [(ngModel)]="textoEditado" rows="3" placeholder="Edita o texto..."></textarea>
+            <select [(ngModel)]="categoriaEditada">
+              <option value="">Sem categoria</option>
+              <option value="cansaço">Cansaço</option>
+              <option value="ansiedade">Ansiedade</option>
+              <option value="tristeza">Tristeza</option>
+              <option value="solidão">Solidão</option>
+              <option value="outro">Outro</option>
+            </select>
+            <div class="btns-editar">
+              <button (click)="guardar(fragment.id)" class="btn-guardar">Guardar</button>
+              <button (click)="cancelarEdicao()" class="btn-cancelar">Cancelar</button>
+            </div>
+          </div>
+        } @else {
+          @if (fragment.text) {
+            <p>{{ fragment.text }}</p>
+          }
+          @if (fragment.category) {
+            <span class="categoria">{{ fragment.category }}</span>
+          }
         }
 
-        @if (fragment.category) {
-          <span class="categoria">{{ fragment.category }}</span>
-        }
-
-        <button (click)="eliminar(fragment.id)" class="btn-eliminar">
-          Eliminar
-        </button>
+        <div class="btns-card">
+          <button (click)="editar(fragment)" class="btn-editar">Editar</button>
+          <button (click)="eliminar(fragment.id)" class="btn-eliminar">Eliminar</button>
+        </div>
 
       </div>
     }

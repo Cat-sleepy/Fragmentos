@@ -21,6 +21,10 @@ interface UploadResponse {
   image: string;
 }
 
+interface UpdateResponse {
+  data: FragmentData;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -53,6 +57,19 @@ export class Fragment {
           Authorization: `Bearer ${token}`
         });
         return this.http.get<FragmentsResponse>(`${this.apiUrl}/fragments/mine`, { headers });
+      })
+    );
+  }
+
+  updateFragment(id: number, body: { text: string; category: string }) {
+    return from(supabase.auth.getSession()).pipe(
+      switchMap(({ data }) => {
+        const token = data.session?.access_token;
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        });
+        return this.http.put<UpdateResponse>(`${this.apiUrl}/fragments/${id}`, body, { headers });
       })
     );
   }
