@@ -6,13 +6,14 @@
 }
 
 :root {
-  --cor-fundo: #0a0a0a;
-  --cor-texto: #e8e4dc;
-  --cor-texto-suave: #8a8278;
-  --cor-destaque: #c8b89a;
+  --cor-fundo: #ede3fe;
+  --cor-fundo-nav: #cdb7f7c2;
+  --cor-texto: #000000;
+  --cor-texto-suave: #6b6b6b;
+  --cor-destaque: #7c5cbf;
   --cor-erro: #c0392b;
-  --cor-sucesso: #27ae60;
-  --fonte-principal: 'Georgia', serif;
+  --cor-sucesso: #1a9f52;
+  --fonte-principal: 'Courier New', monospace;
   --fonte-mono: 'Courier New', monospace;
 }
 
@@ -42,7 +43,7 @@ button {
 input, textarea, select {
   background: #1a1a1a;
   border: 1px solid #333;
-  color: var(--cor-texto);
+  color: #f0f0f0;
   padding: 0.5rem 0.75rem;
   font-family: var(--fonte-principal);
   font-size: 1rem;

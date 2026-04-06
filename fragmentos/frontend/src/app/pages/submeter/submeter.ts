@@ -15,6 +15,7 @@ export class Submeter {
   loading = false;
   sucesso = false;
   erro = '';
+  tipoSelecionado: string | null = null;
 
   constructor(private fb: FormBuilder, private fragmentService: Fragment) {
     this.form = this.fb.group({
@@ -23,14 +24,29 @@ export class Submeter {
     });
   }
 
-  onFileChange(event: any) {
-    this.selectedFile = event.target.files[0];
+  selecionarTipo(tipo: string) {
+    this.tipoSelecionado = tipo;
+    this.form.reset();
+    this.selectedFile = null;
+    this.erro = '';
+    this.sucesso = false;
+  }
+
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   onSubmit() {
-    if (this.form.invalid || !this.selectedFile) {
+    if (this.tipoSelecionado !== 'texto' && !this.selectedFile) {
+      this.erro = 'Seleciona um ficheiro.';
+      return;
+    }
+
+    if (this.form.get('categoria')?.invalid) {
       this.form.markAllAsTouched();
-      this.erro = 'Por favor preenche todos os campos obrigatórios.';
       return;
     }
 
@@ -38,8 +54,10 @@ export class Submeter {
     this.erro = '';
 
     const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    formData.append('texto', this.form.value.texto);
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+    }
+    formData.append('texto', this.form.value.texto ?? '');
     formData.append('categoria', this.form.value.categoria);
 
     this.fragmentService.uploadFragment(formData).subscribe({
@@ -48,8 +66,9 @@ export class Submeter {
         this.loading = false;
         this.form.reset();
         this.selectedFile = null;
+        this.tipoSelecionado = null;
       },
-      error: (err) => {
+      error: () => {
         this.erro = 'Erro ao submeter fragmento. Tenta novamente.';
         this.loading = false;
       }

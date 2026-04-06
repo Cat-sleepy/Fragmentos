@@ -1,58 +1,79 @@
 <div class="submeter-container">
   <h1>Submeter Fragmento</h1>
-  <p>Partilha aquilo que te pesa. Uma imagem, um vídeo, um áudio, um texto.</p>
+  <p>Partilha aquilo que te pesa.</p>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    
-    <div class="campo">
-      <label for="ficheiro">Ficheiro *</label>
-      <input 
-        id="ficheiro"
-        type="file" 
-        accept="image/*,video/*,audio/*,text/*"
-        (change)="onFileChange($event)"
-      />
-      @if (!selectedFile && form.touched) {
-        <span class="erro-msg">Seleciona um ficheiro.</span>
+  @if (!tipoSelecionado) {
+    <div class="tipos">
+      <div class="tipo-card" (click)="selecionarTipo('texto')">
+        <span class="icone">✍️</span>
+        <h2>Texto</h2>
+        <p>Palavras, pensamentos, silêncios.</p>
+      </div>
+
+      <div class="tipo-card" (click)="selecionarTipo('media')">
+        <span class="icone">📷</span>
+        <h2>Imagem & Vídeo</h2>
+        <p>O que vês, o que não consegues deixar de ver.</p>
+      </div>
+
+      <div class="tipo-card" (click)="selecionarTipo('audio')">
+        <span class="icone">🎵</span>
+        <h2>Áudio</h2>
+        <p>O que ouves, o que não consegues deixar de ouvir.</p>
+      </div>
+    </div>
+  }
+
+  @if (tipoSelecionado) {
+    <button class="btn-voltar" (click)="tipoSelecionado = null">← Voltar</button>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      @if (tipoSelecionado === 'texto') {
+        <div class="campo">
+          <label>O teu texto</label>
+          <textarea formControlName="texto" rows="8" placeholder="Escreve aqui..."></textarea>
+        </div>
       }
-    </div>
 
-    <div class="campo">
-      <label for="texto">Texto (opcional)</label>
-      <textarea 
-        id="texto"
-        formControlName="texto" 
-        rows="2"
-        placeholder="Escreve algo se quiseres..."
-      ></textarea>
-    </div>
-
-    <div class="campo">
-      <label for="categoria">Categoria *</label>
-      <select id="categoria" formControlName="categoria">
-        <option value="">Escolhe uma categoria</option>
-        <option value="cansaço">Cansaço</option>
-        <option value="ansiedade">Ansiedade</option>
-        <option value="tristeza">Tristeza</option>
-        <option value="solidão">Solidão</option>
-        <option value="outro">Outro</option>
-      </select>
-      @if (form.get('categoria')?.invalid && form.get('categoria')?.touched) {
-        <span class="erro-msg">Categoria obrigatória.</span>
+      @if (tipoSelecionado === 'media' || tipoSelecionado === 'audio') {
+        <div class="campo">
+          <label>Ficheiro</label>
+          <input 
+            type="file"
+            [accept]="tipoSelecionado === 'audio' ? 'audio/*' : 'image/*,video/*'"
+            (change)="onFileChange($event)"
+          />
+        </div>
       }
-    </div>
 
-    @if (erro) {
-      <p class="erro-msg">{{ erro }}</p>
-    }
+      <div class="campo">
+        <label>Categoria *</label>
+        <select formControlName="categoria">
+          <option value="">Escolhe uma categoria</option>
+          <option value="cansaço">Cansaço</option>
+          <option value="ansiedade">Ansiedade</option>
+          <option value="tristeza">Tristeza</option>
+          <option value="solidão">Solidão</option>
+          <option value="outro">Outro</option>
+        </select>
+        @if (form.get('categoria')?.invalid && form.get('categoria')?.touched) {
+          <span class="erro-msg">Categoria obrigatória.</span>
+        }
+      </div>
 
-    @if (sucesso) {
-      <p class="sucesso-msg">Fragmento submetido com sucesso!</p>
-    }
+      @if (erro) {
+        <p class="erro-msg">{{ erro }}</p>
+      }
 
-    <button type="submit" [disabled]="loading">
-      {{ loading ? 'A submeter...' : 'Submeter' }}
-    </button>
+      @if (sucesso) {
+        <p class="sucesso-msg">Fragmento submetido com sucesso!</p>
+      }
 
-  </form>
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'A submeter...' : 'Submeter' }}
+      </button>
+
+    </form>
+  }
 </div>
