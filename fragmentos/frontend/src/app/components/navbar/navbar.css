@@ -2,11 +2,13 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 2.8rem 3.8rem;
   border-bottom: 1px solid #1f1f1f;
   position: sticky;
   top: 0;
-  background-color: #0a0a0a;
+  background-color: var(--cor-fundo-nav);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(124, 92, 191, 0.1);
   z-index: 100;
 }
 
@@ -31,6 +33,7 @@ nav div a {
 }
 
 nav div a:hover {
+  opacity: 0.6;
   color: var(--cor-texto);
 }
 
@@ -46,8 +49,7 @@ nav div button {
 }
 
 nav div button:hover {
-  background: var(--cor-destaque);
-  color: var(--cor-fundo);
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {

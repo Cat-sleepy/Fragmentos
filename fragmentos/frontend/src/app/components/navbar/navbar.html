@@ -3,9 +3,9 @@
   
   <div>
     <a routerLink="/sobre">Sobre</a>
-    <a routerLink="/submeter">Submeter</a>
     
     @if (utilizadorAutenticado) {
+      <a routerLink="/submeter">Submeter</a>
       <a routerLink="/perfil">Perfil</a>
       <button (click)="logout()">Sair</button>
     } @else {
