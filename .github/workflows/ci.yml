@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./Fragmentos/frontend
+        working-directory: ./fragmentos/frontend
 
     steps:
       - name: Checkout
@@ -39,7 +39,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./Fragmentos/backend
+        working-directory: ./fragmentos/backend
 
     steps:
       - name: Checkout
