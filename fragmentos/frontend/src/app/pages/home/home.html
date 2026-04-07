@@ -1,17 +1,17 @@
 <div class="colagem">
   @if (loading) {
-    <p>{{ mensagemLoading }}</p>
+    <p class="loading-msg">{{ mensagemLoading }}</p>
   }
 
-  @for (fragment of fragments; track fragment.id) {
-    <div class="fragmento">
+  @for (fragment of fragments; track fragment.id; let i = $index) {
+    <div class="fragmento" [ngStyle]="fragmentStyles[i]">
 
       @if (fragment.media_type?.startsWith('image/')) {
         <img [src]="fragment.media_url" [alt]="fragment.text || 'fragmento'" />
       }
 
       @if (fragment.media_type?.startsWith('video/')) {
-        <video [src]="fragment.media_url" controls></video>
+        <video [src]="fragment.media_url" controls muted></video>
       }
 
       @if (fragment.media_type?.startsWith('audio/')) {
@@ -19,7 +19,7 @@
       }
 
       @if (fragment.text && (!fragment.media_url || fragment.media_type?.startsWith('text/'))) {
-        <p class="texto" [ngStyle]="getRandomStyle()">
+        <p class="texto" [ngStyle]="getRandomTextStyle(i)">
           {{ fragment.text }}
         </p>
       }
