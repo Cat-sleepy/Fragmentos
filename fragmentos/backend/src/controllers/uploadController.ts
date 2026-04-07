@@ -8,7 +8,6 @@ export const uploadFile = async (req: Request, res: Response) => {
     const texto = req.body.text;
     const categoria = req.body.category;
 
-    // se não há ficheiro nem texto, rejeita
     if (!file && !texto) {
       res.status(400).json({ message: 'Por favor envia um ficheiro ou texto.' });
       return;
@@ -18,7 +17,6 @@ export const uploadFile = async (req: Request, res: Response) => {
     let mediaType: string | null = null;
 
     if (file) {
-      // validar tipo de ficheiro
       const allowedTypes = ['image/', 'video/', 'audio/', 'text/'];
       const isAllowed = allowedTypes.some(type => file.mimetype.startsWith(type));
 

@@ -40,6 +40,11 @@ export class Submeter {
   }
 
   onSubmit() {
+    if (this.tipoSelecionado === 'texto' && !this.form.value.texto?.trim()) {
+      this.erro = 'Escreve algum texto.';
+      return;
+    }
+
     if (this.tipoSelecionado !== 'texto' && !this.selectedFile) {
       this.erro = 'Seleciona um ficheiro.';
       return;
@@ -72,11 +77,7 @@ export class Submeter {
         this.tipoSelecionado = null;
       },
       error: (err) => {
-        if (err.error?.message) {
-          this.erro = err.error.message;
-        } else {
-          this.erro = 'Erro ao submeter fragmento. Tenta novamente.';
-        }
+        this.erro = err.error?.message || 'Erro ao submeter fragmento. Tenta novamente.';
         this.loading = false;
       }
     });

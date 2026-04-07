@@ -1,7 +1,7 @@
 <div class="colagem">
   @if (loading) {
-  <p>{{ mensagemLoading }}</p>
-}
+    <p>{{ mensagemLoading }}</p>
+  }
 
   @for (fragment of fragments; track fragment.id) {
     <div class="fragmento">
@@ -18,10 +18,10 @@
         <audio [src]="fragment.media_url" controls></audio>
       }
 
-      @if (fragment.media_type?.startsWith('text/')) {
+      @if (fragment.text && (!fragment.media_url || fragment.media_type?.startsWith('text/'))) {
         <p class="texto" [ngStyle]="getRandomStyle()">
-  {{ fragment.text }}
-</p>
+          {{ fragment.text }}
+        </p>
       }
 
     </div>
