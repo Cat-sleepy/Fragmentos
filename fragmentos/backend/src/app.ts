@@ -16,12 +16,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(helmet());
+
 app.use(cors({
   origin: [
     'http://localhost:4200',
-    'https://fragmentos-frontend.vercel.app',
-    'https://fragmentos-frontend-bj6buo5zb-cat-sleepys-projects.vercel.app'
-  ]
+    'https://fragmentos-frontend-hxqh6fd32-cat-sleepys-projects.vercel.app'
+  ],
+  credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
