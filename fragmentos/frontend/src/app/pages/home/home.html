@@ -15,11 +15,17 @@
       }
 
       @if (fragment.media_type?.startsWith('audio/')) {
-        <audio [src]="fragment.media_url" controls></audio>
+        <audio 
+  [src]="fragment.media_url" 
+  autoplay 
+  muted 
+  loop 
+  preload="auto">
+</audio>
       }
 
       @if (fragment.text && (!fragment.media_url || fragment.media_type?.startsWith('text/'))) {
-        <p class="texto" [ngStyle]="getRandomTextStyle(i)">
+        <p class="texto" [ngStyle]="textStyles[i]">
           {{ fragment.text }}
         </p>
       }
