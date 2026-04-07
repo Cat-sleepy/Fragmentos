@@ -68,9 +68,13 @@ export class Submeter {
         this.selectedFile = null;
         this.tipoSelecionado = null;
       },
-      error: () => {
+      error: (err) => {
+        if (err.error?.message) {
+        this.erro = err.error.message;
+      } else {
         this.erro = 'Erro ao submeter fragmento. Tenta novamente.';
-        this.loading = false;
+      }
+      this.loading = false;
       }
     });
   }
