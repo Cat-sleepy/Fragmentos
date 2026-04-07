@@ -47,10 +47,14 @@ export class AuthModal {
       : await this.authService.register(email, password);
 
     if (resultado.error) {
-      this.erro = resultado.error.message;
-      this.loading = false;
-      return;
-    }
+  if (resultado.error.message.includes('registered')) {
+    this.erro = 'Este email já está a ser utilizado.';
+  } else {
+    this.erro = 'Erro ao autenticar.';
+  }
+  this.loading = false;
+  return;
+}
 
     this.loading = false;
     this.autenticado.emit();
