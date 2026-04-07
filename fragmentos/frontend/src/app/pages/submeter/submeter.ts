@@ -52,13 +52,16 @@ export class Submeter {
 
     this.loading = true;
     this.erro = '';
+    this.sucesso = false;
 
     const formData = new FormData();
+
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
     }
-    formData.append('texto', this.form.value.texto ?? '');
-    formData.append('categoria', this.form.value.categoria);
+
+    formData.append('text', this.form.value.texto ?? '');
+    formData.append('category', this.form.value.categoria);
 
     this.fragmentService.uploadFragment(formData).subscribe({
       next: () => {
@@ -70,11 +73,11 @@ export class Submeter {
       },
       error: (err) => {
         if (err.error?.message) {
-        this.erro = err.error.message;
-      } else {
-        this.erro = 'Erro ao submeter fragmento. Tenta novamente.';
-      }
-      this.loading = false;
+          this.erro = err.error.message;
+        } else {
+          this.erro = 'Erro ao submeter fragmento. Tenta novamente.';
+        }
+        this.loading = false;
       }
     });
   }
