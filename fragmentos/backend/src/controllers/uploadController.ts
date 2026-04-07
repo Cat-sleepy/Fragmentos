@@ -41,7 +41,7 @@ export const uploadFile = async (req: Request, res: Response) => {
 
       mediaUrl = image.publicUrl;
       mediaType = file.mimetype;
-    } else if (texto) {
+    } else if (texto && texto.trim()) {
       mediaType = 'text/plain';
     }
 

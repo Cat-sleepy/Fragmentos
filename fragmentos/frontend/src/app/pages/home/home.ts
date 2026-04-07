@@ -33,7 +33,6 @@ export class Home implements OnInit {
     });
   }
 
-  // 👇 ADICIONA ISTO AQUI (dentro da classe, depois do ngOnInit)
   getRandomStyle() {
     const sizes = ['0.9rem', '1.1rem', '1.3rem', '1.6rem'];
     const rotations = ['-2deg', '0deg', '2deg'];
