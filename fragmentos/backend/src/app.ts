@@ -10,13 +10,18 @@ import uploadRouter from './routes/upload.js';
 import fragmentsRouter from './routes/fragments.js';
 import profileRouter from './routes/profile.js';
 
+
 // initialize express app
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(helmet());
 app.use(cors({
-  origin: ['https://fragmentos-frontend-bj6buo5zb-cat-sleepys-projects.vercel.app', 'http://localhost:4200']
+  origin: [
+    'http://localhost:4200',
+    'https://fragmentos-frontend.vercel.app',
+    'https://fragmentos-frontend-bj6buo5zb-cat-sleepys-projects.vercel.app'
+  ]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
