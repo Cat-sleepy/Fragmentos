@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Fragment, FragmentData } from '../../services/fragment';
+import { Profile, ProfileData } from '../../services/profile';
 
 @Component({
   selector: 'app-perfil',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './perfil.html',
   styleUrl: './perfil.css',
 })
@@ -17,9 +18,29 @@ export class Perfil implements OnInit {
   textoEditado = '';
   categoriaEditada = '';
 
-  constructor(private fragmentService: Fragment) {}
+  // perfil
+  profile: ProfileData | null = null;
+  editandoPerfil = false;
+  perfilForm: FormGroup;
+
+  constructor(
+    private fragmentService: Fragment,
+    private profileService: Profile,
+    private fb: FormBuilder
+  ) {
+    this.perfilForm = this.fb.group({
+      username: [''],
+      bio: [''],
+      avatar_url: [''],
+    });
+  }
 
   ngOnInit() {
+    this.carregarFragmentos();
+    this.carregarPerfil();
+  }
+
+  carregarFragmentos() {
     this.fragmentService.getMyFragments().subscribe({
       next: (res) => {
         this.fragments = res.data;
@@ -28,6 +49,34 @@ export class Perfil implements OnInit {
       error: () => {
         this.erro = 'Erro ao carregar os teus fragmentos.';
         this.loading = false;
+      }
+    });
+  }
+
+  carregarPerfil() {
+    this.profileService.getProfile().subscribe({
+      next: (res) => {
+        this.profile = res.data;
+        if (res.data) {
+          this.perfilForm.patchValue({
+            username: res.data.username ?? '',
+            bio: res.data.bio ?? '',
+            avatar_url: res.data.avatar_url ?? '',
+          });
+        }
+      },
+      error: () => {}
+    });
+  }
+
+  guardarPerfil() {
+    this.profileService.updateProfile(this.perfilForm.value).subscribe({
+      next: (res) => {
+        this.profile = res.data;
+        this.editandoPerfil = false;
+      },
+      error: () => {
+        this.erro = 'Erro ao guardar perfil.';
       }
     });
   }
@@ -49,7 +98,7 @@ export class Perfil implements OnInit {
       text: this.textoEditado,
       category: this.categoriaEditada
     }).subscribe({
-      next: (res) => {
+      next: () => {
         this.fragments = this.fragments.map(f =>
           f.id === id ? { ...f, text: this.textoEditado, category: this.categoriaEditada } : f
         );

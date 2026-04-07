@@ -1,59 +1,46 @@
-.perfil-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-}
-
-h1 {
-  font-size: 1.5rem;
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
   margin-bottom: 2rem;
 }
 
-.lista-fragmentos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #c9b8e8;
 }
 
-.fragmento-card {
-  border: 1px solid #c9b8e8;
-  padding: 1rem;
-  width: calc(50% - 0.75rem);
+.avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #c9b8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
   background: white;
 }
 
-.fragmento-card img,
-.fragmento-card video {
-  width: 100%;
-  max-height: 250px;
-  object-fit: cover;
+.perfil-info h1 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
 }
 
-.fragmento-card audio {
-  width: 100%;
-}
-
-.categoria {
-  font-size: 0.75rem;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
+.bio {
   color: var(--cor-texto-suave);
-  display: block;
-  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
 }
 
-.btns-card {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-}
-
-.btn-editar {
-  flex: 1;
+.btn-editar-perfil {
   background: none;
   border: 1px solid #c9b8e8;
   color: var(--cor-destaque);
-  padding: 0.3rem 0.75rem;
+  padding: 0.3rem 1rem;
   font-size: 0.8rem;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
@@ -62,79 +49,37 @@ h1 {
   transition: all 0.2s;
 }
 
-.btn-editar:hover {
+.btn-editar-perfil:hover {
   background: rgba(124, 92, 191, 0.1);
 }
 
-.btn-eliminar {
-  flex: 1;
-  background: none;
-  border: 1px solid #c0392b;
-  color: #c0392b;
-  padding: 0.3rem 0.75rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
-  font-family: var(--fonte-principal);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-eliminar:hover {
-  background: #c0392b;
-  color: white;
-}
-
-.form-editar {
+.form-perfil {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin: 0.75rem 0;
-}
-
-.form-editar textarea,
-.form-editar select {
-  background: white !important;
-  border: 1px solid #c9b8e8 !important;
-  color: var(--cor-texto) !important;
-  font-family: var(--fonte-principal);
-}
-
-.btns-editar {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.btn-guardar {
-  background: var(--cor-destaque);
-  color: white;
-  border: none;
-  padding: 0.4rem 1rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
-  font-family: var(--fonte-principal);
-  cursor: pointer;
-}
-
-.btn-cancelar {
-  background: none;
+  gap: 1rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
+  background: white;
+  padding: 1.5rem;
   border: 1px solid #c9b8e8;
-  color: var(--cor-texto-suave);
-  padding: 0.4rem 1rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
-  font-family: var(--fonte-principal);
-  cursor: pointer;
+}
+
+.divisor {
+  border: none;
+  border-top: 1px solid #c9b8e8;
+  margin: 2rem 0;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05rem;
 }
 
 @media (max-width: 768px) {
-  .perfil-container {
-    padding: 2rem 1rem;
-  }
-
-  .fragmento-card {
-    width: 100%;
+  .perfil-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }

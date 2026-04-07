@@ -1,5 +1,44 @@
 <div class="perfil-container">
-  <h1>Os meus Fragmentos</h1>
+
+  <!-- Secção do perfil -->
+  <div class="perfil-header">
+    @if (profile?.avatar_url) {
+      <img [src]="profile!.avatar_url" alt="avatar" class="avatar" />
+      <div class="avatar-placeholder">👤</div>
+    }
+
+    <div class="perfil-info">
+      <h1>{{ profile?.username || 'Sem nome de utilizador' }}</h1>
+      @if (profile?.bio) {
+        <p class="bio">{{ profile!.bio }}</p>
+      }
+      <button (click)="editandoPerfil = !editandoPerfil" class="btn-editar-perfil">
+        {{ editandoPerfil ? 'Cancelar' : 'Editar perfil' }}
+      </button>
+    </div>
+  </div>
+
+  @if (editandoPerfil) {
+    <form [formGroup]="perfilForm" (ngSubmit)="guardarPerfil()" class="form-perfil">
+      <div class="campo">
+        <label>Nome de utilizador</label>
+        <input type="text" formControlName="username" placeholder="o teu nome" />
+      </div>
+      <div class="campo">
+        <label>Bio</label>
+        <textarea formControlName="bio" rows="3" placeholder="Fala um pouco sobre ti..."></textarea>
+      </div>
+      <div class="campo">
+        <label>URL da foto de perfil</label>
+        <input type="text" formControlName="avatar_url" placeholder="https://..." />
+      </div>
+      <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+  }
+
+  <hr class="divisor" />
+
+  <h2>Os meus Fragmentos</h2>
 
   @if (loading) {
     <p>A carregar...</p>
