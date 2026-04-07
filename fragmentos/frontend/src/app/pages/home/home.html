@@ -19,7 +19,9 @@
       }
 
       @if (fragment.media_type?.startsWith('text/')) {
-        <p class="texto">{{ fragment.text }}</p>
+        <p class="texto" [ngStyle]="getRandomStyle()">
+  {{ fragment.text }}
+</p>
       }
 
     </div>

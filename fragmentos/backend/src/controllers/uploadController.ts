@@ -14,7 +14,6 @@ export const uploadFile = async (req: Request, res: Response) => {
       return;
     }
 
-    // ✅ CORREÇÃO AQUI
     let mediaUrl: string | null = null;
     let mediaType: string | null = null;
 
@@ -44,6 +43,8 @@ export const uploadFile = async (req: Request, res: Response) => {
 
       mediaUrl = image.publicUrl;
       mediaType = file.mimetype;
+    } else if (texto) {
+      mediaType = 'text/plain';
     }
 
     const { error: dbError } = await supabase
@@ -60,7 +61,6 @@ export const uploadFile = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Fragmento submetido com sucesso!' });
   } catch (error) {
-    // pequena melhoria para erro mais limpo
     res.status(500).json({
       error: error instanceof Error ? error.message : 'Erro interno.'
     });
