@@ -4,7 +4,9 @@
   <div class="perfil-header">
     @if (profile?.avatar_url) {
       <img [src]="profile!.avatar_url" alt="avatar" class="avatar" />
-      <div class="avatar-placeholder">👤</div>
+      } @else {
+    <div class="avatar-placeholder">👤</div>
+
     }
 
     <div class="perfil-info">
