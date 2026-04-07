@@ -14,8 +14,9 @@ export const uploadFile = async (req: Request, res: Response) => {
       return;
     }
 
-    let mediaUrl = null;
-    let mediaType = null;
+    // ✅ CORREÇÃO AQUI
+    let mediaUrl: string | null = null;
+    let mediaType: string | null = null;
 
     if (file) {
       // validar tipo de ficheiro
@@ -59,6 +60,9 @@ export const uploadFile = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Fragmento submetido com sucesso!' });
   } catch (error) {
-    res.status(500).json({ error: error });
+    // pequena melhoria para erro mais limpo
+    res.status(500).json({
+      error: error instanceof Error ? error.message : 'Erro interno.'
+    });
   }
 };
